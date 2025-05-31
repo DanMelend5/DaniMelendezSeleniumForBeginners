@@ -1,0 +1,2 @@
+
+C:\Users\daniel.melendez\Desktop\danielstuff\SeleniumForBegginers>mvn clean test -DsuiteXmlFile=SmokeTestSuite.xml
