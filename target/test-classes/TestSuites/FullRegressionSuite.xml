@@ -16,7 +16,7 @@
         <parameter name="browser" value="firefox"></parameter>
         <classes>
             <class name="com.practicetestautomation.tests.login.LoginTests">
-                <methods>
+                c<methods>
                     <include name="testLoginFunctionality"/>
                 </methods>
             </class>
