@@ -1,4 +1,6 @@
 package com.practicetestautomation.tests.exceptions;
+
+import com.google.common.base.Verify;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
 import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +41,7 @@ public class ExceptionsTests {
                 driver = new ChromeDriver();
                 break;
         }
-       //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // tells selenium to wait for 10 second on the screen
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // tells selenium to wait for 10 second on the screen
 
         // Open page
 
@@ -53,7 +56,7 @@ public class ExceptionsTests {
 
     @Test
     public void noSuchElementExceptionTest() {
-  //       EXPETECT CONDITIONS
+        //       EXPETECT CONDITIONS
 //        elementToBeClickable
 //        visibilityOfElementLocated
 //        PresenceOfElementLocated
@@ -76,8 +79,8 @@ public class ExceptionsTests {
         WebElement addButton = driver.findElement(By.id("add_btn"));
         addButton.click();
 
-       // WebElement row2InputFieldXpath = wait.until(ExpectedConditions.visibilityOfElementLocated
-                                                    (By.xpath("//div[@id='row2']/input")));
+        WebElement row2InputFieldXpath = wait.until(ExpectedConditions.visibilityOfElementLocated
+                (By.xpath("//div[@id='row2']/input")));
 
         // locate second Row element
         logger.info("locate second row");
@@ -86,6 +89,81 @@ public class ExceptionsTests {
 //       in devtools console type $x("(//input [@class='input-field'])[2]") -- ("//div[@id='row2']/input")
 //        WebElement row2InputFieldXpath = driver.findElement(By.xpath("//div[@id='row2']/input"));
         Assert.assertTrue(row2InputFieldXpath.isDisplayed(), "row 2 field is not display");
+
+    }
+
+ /*   @Test
+         create time out test
+        public void timeoutExceptionTest() {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+            // push add button
+            WebElement addButton = driver.findElement(By.id("add_btn"));
+            addButton.click();
+            WebElement row2InputFieldXpath = wait.until(ExpectedConditions.visibilityOfElementLocated
+                    (By.xpath("//div[@id='row2']/input")));
+*/
+
+    @Test
+    public void ElementNotInteractableException() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+
+        // Click  add button
+        WebElement addButton = driver.findElement(By.id("add_btn"));
+        addButton.click();
+        WebElement row2InputFieldXpath = wait.until(ExpectedConditions.visibilityOfElementLocated
+                (By.xpath("//div[@id='row2']/input")));
+
+        row2InputFieldXpath.sendKeys("Grilled Meat");
+
+        // Click Save Button
+
+        //WebElement saveButton = driver.findElement (By.xpath("//div[@id='row2']/button") -- creates no interactable exception
+
+        WebElement saveButton = driver.findElement(By.xpath("//div[@id='row2']/button[@name='Save']"));
+        saveButton.click();
+
+        // Verify text saved
+
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated
+                (By.id("confirmation")));
+        String actualMessage = successMessage.getText();
+        String expectedMessage = "Row 2 was saved";
+        Assert.assertEquals(actualMessage, expectedMessage, "message is not expected");
+
+    }
+
+    @Test
+    public void InvalidElementStateException() {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+//          //        Clear input field
+        logger.info("clearing input field");
+        WebElement row1InputFieldXpath = driver.findElement((By.xpath("//div[@id='row1']/input")));
+        String currentText = row1InputFieldXpath.getText();
+        WebElement editButton = driver.findElement(By.id("edit_btn"));
+        editButton.click();
+        row1InputFieldXpath.clear();
+
+//        Type text into the input field
+        logger.info("changing text");
+        row1InputFieldXpath.sendKeys("ice cream");
+        WebElement saveButton = driver.findElement(By.xpath("//div[@id='row1']/button[@name='Save']"));
+        saveButton.click();
+
+        // Verify text saved
+
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated
+                (By.id("confirmation")));
+        String actualMessage = successMessage.getText();
+        String expectedMessage = "Row 1 was saved";
+        Assert.assertEquals(actualMessage, expectedMessage, "message is not expected");
+
+//        Verify text changed
+        String newText = row1InputFieldXpath.getText();
+        Assert.assertEquals(currentText, newText, "there is no favorite food");
+
+
+            logger.info("There is a new favorite food");
 
     }
 }

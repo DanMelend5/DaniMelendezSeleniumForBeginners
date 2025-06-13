@@ -10,4 +10,15 @@
             </class>
         </classes>
     </test>
+
+
+    <test name="timeout Exception Test">
+        <classes>
+            <class name="com.practicetestautomation.tests.exceptions.ExceptionsTests">
+                <methods>
+                    <include name="timeoutExceptionTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>
