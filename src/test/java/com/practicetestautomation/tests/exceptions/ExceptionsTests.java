@@ -119,7 +119,8 @@ public class ExceptionsTests {
 
         //WebElement saveButton = driver.findElement (By.xpath("//div[@id='row2']/button") -- creates no interactable exception
 
-        WebElement saveButton = driver.findElement(By.xpath("//div[@id='row2']/button[@name='Save']"));
+        WebElement saveButton = driver.findElement(By.xpath
+                                                   ("//div[@id='row2']/button[@name='Save']"));
         saveButton.click();
 
         // Verify text saved
@@ -163,8 +164,29 @@ public class ExceptionsTests {
         Assert.assertEquals(currentText, newText, "there is no favorite food");
 
 
-            logger.info("There is a new favorite food");
+        logger.info("There is a new favorite food");
 
+    }
+
+    @Test
+    public void StaleElementReferenceException() {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+//          //        Clear input field
+
+        //   WebElement instructions = driver.findElement(By.id("instructions"));
+
+        // Click  add button
+        WebElement addButton = driver.findElement(By.id("add_btn"));
+        addButton.click();
+
+
+        // Handing when an ellemnt is no longer present
+        Assert.assertTrue(wait.until
+                         (ExpectedConditions.invisibilityOfElementLocated
+                         (By.id("instructions"))),"instructions is still displayed");
+
+        //  Assert.assertFalse(instructions.isDisplayed(), "instructions is still displayed");
     }
 }
 
