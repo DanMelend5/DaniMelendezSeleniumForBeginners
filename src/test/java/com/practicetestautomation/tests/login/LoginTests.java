@@ -1,4 +1,7 @@
 package com.practicetestautomation.tests.login;
+
+import com.practicetestautomation.pageobjects.LoginPage;
+import com.practicetestautomation.pageobjects.SuccessfulLoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,11 +39,6 @@ public class LoginTests {
                 driver = new ChromeDriver();
                 break;
         }
-
-
-        // Open page
-
-        driver.get("https://practicetestautomation.com/practice-test-login/");
     }
 
     @AfterMethod(alwaysRun = true)
@@ -52,41 +50,17 @@ public class LoginTests {
     @Test(groups = {"positive", "regression", "smoke"})
     public void testLoginFunctionality() {
         logger.info("Starting testLoginFunctionality");
-        // Type username student into Username field
-        WebElement usernameInput = driver.findElement(By.id("username"));
-        logger.info("Type username");
-        usernameInput.sendKeys("student");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.navigate();
+        //executeLogin() returns successful login page. here we save the return value into a new variable
+        SuccessfulLoginPage successfulLoginPage = loginPage.executeLogin("student", "Password123");
+        successfulLoginPage.load();
 
-        // Type password Password123 into Password field
-        WebElement passwordInput = driver.findElement(By.id("password"));
-        logger.info("Type password");
-        passwordInput.sendKeys("Password123");
-
-        // Push Submit button
-        WebElement submitButton = driver.findElement(By.id("submit"));
-        logger.info("Click Submit button");
-        submitButton.click();
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        //Verifies login functionality the logging page
         logger.info("Verify the login functionality");
-        // Verify new page URL contains practicetestautomation.com/logged-in-successfully/
-        String expectedUrl = "https://practicetestautomation.com/logged-in-successfully/";
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals(actualUrl, expectedUrl);
-
-        // Verify new page contains expected text ('Congratulations' or 'successfully logged in')
-        String expectedMessage = "Congratulations student. You successfully logged in!";
-        String pageSource = driver.getPageSource();
-        Assert.assertTrue(pageSource.contains(expectedMessage));
-
-        // Verify button Log out is displayed on the new page
-        WebElement logOutButton = driver.findElement(By.linkText("Log out"));
-        Assert.assertTrue(logOutButton.isDisplayed());
+        Assert.assertEquals(successfulLoginPage.getCurrentUrl(), "https://practicetestautomation.com/logged-in-successfully/");
+        Assert.assertTrue(successfulLoginPage.getPageSource().contains("Congratulations student. You successfully logged in!"));
+        Assert.assertTrue(successfulLoginPage.isLogoutButtonDisplay());
     }
 
     @Parameters({"username", "password", "expectedErrorMessage"})

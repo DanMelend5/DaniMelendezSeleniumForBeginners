@@ -14,12 +14,16 @@ public class BasePage {
     protected WebDriver driver;  //WebDriver here is a class level variable
     protected WebDriverWait wait;
 
-    public BasePage(WebDriver driver) { //WebDriver here is a parameter, constructor have name of the class
+    public BasePage(WebDriver driver) { //WebDriver here is a parameter, constructor has name of the class
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); //
     }
 
-    public String getCurrentUrl(){
+    protected void navigate(String url)  {
+        driver.get(url);
+    } //opens the url we want
+
+    public String getCurrentUrl(){  //This method find the current page to compare errors
         return driver.getCurrentUrl();
     }
 

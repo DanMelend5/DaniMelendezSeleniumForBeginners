@@ -15,6 +15,9 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    public void navigate(){
+        super.navigate("https://practicetestautomation.com/practice-test-login/");
+    }
     public void enterUsername(String username) {
         driver.findElement(usernameInputLocator).sendKeys(username);
     }
@@ -31,7 +34,7 @@ public class LoginPage extends BasePage {
         enterUsername(username);
         enterPassword(password);
         clickSubmitButton();
-        return new SuccessfulLoginPage(driver);
+        return new SuccessfulLoginPage(driver); //Returns SuccessfulLoginPage page
     }
 
     public String getErrorMessage() {
