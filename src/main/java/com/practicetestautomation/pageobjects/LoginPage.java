@@ -11,7 +11,6 @@ public class LoginPage extends BasePage {
     private By submitButtonLocator = By.id("submit");
     private By errorMessageLocator = By.id("error");
 
-
     public LoginPage(WebDriver driver) {  // we send 'driver' to login page and driver to basePage
         super(driver);
     }
@@ -41,5 +40,4 @@ public class LoginPage extends BasePage {
                 //After returns the text
         return errorMessageElement.getText(); //The webElement is the place
     }
-
 }
