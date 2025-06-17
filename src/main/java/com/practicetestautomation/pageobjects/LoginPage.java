@@ -37,6 +37,10 @@ public class LoginPage extends BasePage {
         return new SuccessfulLoginPage(driver); //Returns SuccessfulLoginPage page
     }
 
+    public boolean isErrorMessageDisplay() {
+        return isDisplay(errorMessageLocator);
+    }
+
     public String getErrorMessage() {
                 // first wait for the element to display
         WebElement errorMessageElement = waitForElement(errorMessageLocator);

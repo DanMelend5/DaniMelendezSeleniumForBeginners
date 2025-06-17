@@ -63,37 +63,26 @@ public class LoginTests {
         Assert.assertTrue(successfulLoginPage.isLogoutButtonDisplay());
     }
 
-    @Parameters({"username", "password", "expectedErrorMessage"})
+    @Parameters({"invalidUsername", "validPassword", "expectedErrorMessage"})
     @Test(groups = {"negative", "regression"})
-    public void negativeLoginTest(String username, String password, String expectedErrorMessage) {
-        logger.info("Starting negativeLoginTest");
-        // Type username incorrectUser into Username field
-        WebElement usernameInput = driver.findElement(By.id("username"));
-        logger.info("Typing username: " + username);
-        usernameInput.sendKeys(username);
+    public void negativeLoginTest(String invalidUsername,
+                                  String validPassword,
+                                  String expectedErrorMessage) {
+        logger.info("Starting testLoginFunctionality");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.navigate();
+        //executeLogin() returns successful login page. here we save the return value into a new variable
+        logger.info("Typing username: " + invalidUsername);
+        loginPage.executeLogin(invalidUsername, validPassword);
+        loginPage.getErrorMessage();
 
-        // Type password Password123 into Password field
-        WebElement passwordInput = driver.findElement(By.id("password"));
-        logger.info("Typing password");
-        passwordInput.sendKeys(password);
-
-        // Push Submit button
-        WebElement submitButton = driver.findElement(By.id("submit"));
-        logger.info("Click Submit button");
-        submitButton.click();
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         logger.info("Verify the expected error message: " + expectedErrorMessage);
         // Verify error message is displayed
-        WebElement errorMessage = driver.findElement(By.id("error"));
-        Assert.assertTrue(errorMessage.isDisplayed());
+
+        Assert.assertTrue(loginPage.isErrorMessageDisplay());
 
         // Verify error message text is Your username is invalid!
-        String actualErrorMessage = errorMessage.getText();
-        Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
+
+        Assert.assertEquals(loginPage.getErrorMessage(), expectedErrorMessage);
     }
 }
