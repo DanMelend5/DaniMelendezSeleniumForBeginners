@@ -12,18 +12,6 @@
         </classes>
     </test>
 
-    <test name="Positive Login Tests in Firefox ">
-        <parameter name="browser" value="firefox"></parameter>
-        <classes>
-            <class name="com.practicetestautomation.tests.login.LoginTests">
-                c<methods>
-                    <include name="testLoginFunctionality"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-
     <test name="Incorrect Username Test">
         <parameter name="browser" value="firefox"></parameter>
         <parameter name="invalidUsername" value="invalidUsername"></parameter>
@@ -32,10 +20,24 @@
         <classes>
             <class name="com.practicetestautomation.tests.login.LoginTests">
                 <methods>
-                    <include name="negativeLoginTest"/>
+                    <include name="negativeUsernameLoginTest"/>
                 </methods>
             </class>
         </classes>
     </test>
 
+
+    <test name="Incorrect Password Test">
+        <parameter name="browser" value="Edge"></parameter>
+        <parameter name="validUsername" value="student"></parameter>
+        <parameter name="invalidPassword" value="incorrectPassword"></parameter>
+        <parameter name="expectedErrorMessage" value="Your password is invalid!"></parameter>
+        <classes>
+            <class name="com.practicetestautomation.tests.login.LoginTests">
+                <methods>
+                    <include name="negativePasswordLoginTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>
