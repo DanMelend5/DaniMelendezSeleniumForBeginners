@@ -73,6 +73,7 @@ public class LoginTests {
         logger.info("Starting testLoginFunctionality");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.navigate();
+
         //executeLogin() returns successful login page. here we save the return value into a new variable
         logger.info("Typing username: " + invalidUsername);
         loginPage.executeLogin(invalidUsername, validPassword);
