@@ -54,7 +54,7 @@ public class LoginTests {
         loginPage.navigate();
         //executeLogin() returns successful login page. here we save the return value into a new variable
         SuccessfulLoginPage successfulLoginPage = loginPage.executeLogin("student", "Password123");
-        successfulLoginPage.load();
+        successfulLoginPage.islogOutButtonDisplay();
 
         //Verifies login functionality the logging page
         logger.info("Verify the login functionality");

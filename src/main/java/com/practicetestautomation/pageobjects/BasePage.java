@@ -16,7 +16,7 @@ public class BasePage {
 
     public BasePage(WebDriver driver) { //WebDriver here is a parameter, constructor has name of the class
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); //
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(6)); //
     }
 
     protected void navigate(String url)  {
@@ -41,6 +41,8 @@ public class BasePage {
         } catch (NoSuchElementException e) {   //the handles no such element Exception
             return false;
         }
+
+
     }
 }
 
