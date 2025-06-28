@@ -1,9 +1,6 @@
 package com.practicetestautomation.pageobjects;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -19,19 +16,19 @@ public class BasePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(6)); //
     }
 
-    protected void navigate(String url)  {
+    protected void navigate(String url) {
         driver.get(url);
     } //opens the url we want
 
-    public String getCurrentUrl(){  //This method find the current page to compare errors
+    public String getCurrentUrl() {  //This method find the current page to compare errors
         return driver.getCurrentUrl();
     }
 
-    public String getPageSource(){
+    public String getPageSource() {
         return driver.getPageSource();
     }
 
-    protected WebElement waitForElement(By locator){
+    protected WebElement waitForElement(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));  // uses a general locator
     }
 
@@ -41,8 +38,24 @@ public class BasePage {
         } catch (NoSuchElementException e) {   //the handles no such element Exception
             return false;
         }
+    }
 
+    protected boolean waitForIsDisplay(By locator) { // handles a timeout exception
+        try {
+            waitForElement(locator);
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 
+    protected boolean waitForIsHidden(By locator) { // handles the element is not visible
+        try {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 }
 

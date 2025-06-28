@@ -2,7 +2,7 @@
 
 <suite name="Exceptions tests" verbose="1">
     <test name="No Such Element Found Tests">
-               <classes>
+        <classes>
             <class name="com.practicetestautomation.tests.exceptions.ExceptionsTests">
                 <methods>
                     <include name="noSuchElementExceptionTest"/>
@@ -11,12 +11,31 @@
         </classes>
     </test>
 
-
-    <test name="timeout Exception Test">
+    <test name="Element Not Interactable Exception">
         <classes>
             <class name="com.practicetestautomation.tests.exceptions.ExceptionsTests">
                 <methods>
-                    <include name="timeoutExceptionTest"/>
+                    <include name="ElementNotInteractableException"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Invalid Element State Exception">
+        <classes>
+            <class name="com.practicetestautomation.tests.exceptions.ExceptionsTests">
+                <methods>
+                    <include name="InvalidElementStateException"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Stale Element Reference Exception">
+        <classes>
+            <class name="com.practicetestautomation.tests.exceptions.ExceptionsTests">
+                <methods>
+                    <include name="StaleElementReferenceException"/>
                 </methods>
             </class>
         </classes>
